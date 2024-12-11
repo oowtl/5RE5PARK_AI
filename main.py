@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
@@ -8,6 +9,14 @@ from torch.nn.functional import softmax
 
 app = FastAPI()
 
+# CORS 미들웨어 추가
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 모든 Origin 허용
+    allow_credentials=True,  # 쿠키나 인증 정보를 허용
+    allow_methods=["*"],  # 모든 HTTP 메서드 허용 (GET, POST, PUT, DELETE 등)
+    allow_headers=["*"],  # 모든 헤더 허용
+)
 
 # 모델 로드
 model_path = "JhDev/my-bert-sentiment-multiple"
